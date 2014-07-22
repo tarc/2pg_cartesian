@@ -15,6 +15,12 @@
 #include "topology.h"
 #include "pdbatom.h"
 
+#ifdef WIN32
+#include "2pg_cartesian_export.h"
+#else
+#include "2pg_cartesian_export_linux.h"
+#endif
+
 //#include "randomlib.h"
 
 /* Starting declaration of global variable for algorithms */
@@ -30,6 +36,7 @@ static char pop_file_name_GRO[MAX_FILE_NAME];
 /* End of declaration of global variable for algorithms */
 
 /** Initialization for executing of Algorithms */
+_2PG_CARTESIAN_EXPORT
 void initialize_algorithm_execution(const primary_seq_t *primary_sequence_aux,
 		const input_parameters_t *in_para_aux){	
 	primary_sequence = primary_sequence_aux;	
@@ -78,6 +85,7 @@ void update_execution_algorithms(const solution_t *solutions, const int *tag){
 
 /**
 */
+_2PG_CARTESIAN_EXPORT
 int get_choose_residue(const int *num_res_prot){
     int max_residue_choose;
     int num_residue_choose;

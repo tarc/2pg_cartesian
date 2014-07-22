@@ -11,7 +11,13 @@
 #include "pdbio.h"
 #include "pdbatom.h"
 
+#ifdef WIN32
+#include "2pg_cartesian_export.h"
+#else
+#include "2pg_cartesian_export_linux.h"
+#endif
 
+_2PG_CARTESIAN_EXPORT
 void load_initial_population_file(protein_t *pop, const int *pop_size, const char *path, 
 	const char *file_name, const primary_seq_t *primary_sequence){
 

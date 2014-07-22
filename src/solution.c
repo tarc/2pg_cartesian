@@ -4,6 +4,12 @@
 #include "solution.h"
 #include "defines.h"
 
+#ifdef WIN32
+#include "2pg_cartesian_export.h"
+#else
+#include "2pg_cartesian_export_linux.h"
+#endif
+
 
 /** Initialize a Solution
 * solution_aux represents the solution which will be initialized
@@ -20,6 +26,7 @@ void initialize_solution(solution_t * solution_aux, const int *nbj){
 * nsol is the number of solutions. Its number will be population size
 * nbj is the number of objectives
 */
+_2PG_CARTESIAN_EXPORT
 solution_t * allocate_solution(const int *nsol, const int *nbj){
 	solution_t * solution_aux;	
 	solution_aux = Malloc(solution_t,*nsol);
@@ -30,6 +37,7 @@ solution_t * allocate_solution(const int *nsol, const int *nbj){
 	return solution_aux;
 }
 
+_2PG_CARTESIAN_EXPORT
 void desallocate_solution(solution_t *sol, const int *nsol){
 	for (int s = 0; s < *nsol; s++){
 		free(sol[s].obj_values);

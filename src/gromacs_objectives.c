@@ -3,9 +3,15 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+
+#ifndef WIN32
 #include <sys/wait.h>
-#include <fcntl.h>
 #include <unistd.h>
+#else
+#include <float.h>
+#endif
+
+#include <fcntl.h>
 #include <stdlib.h>
 #include <errno.h>
 #include <math.h>
@@ -20,6 +26,12 @@
 #include "parameters_type.h"
 #include "protein_type.h"
 #include "pdbio.h"
+
+#ifdef WIN32
+#include "2pg_cartesian_export.h"
+#else
+#include "2pg_cartesian_export_linux.h"
+#endif
 
 
 #define TAM_LINE_ENER 50
@@ -139,6 +151,7 @@ static inline int run_program_after_pipe(const char *pipe_msg, const char *file,
 	return 1;
 }
 
+#ifndef WIN32
 /*
  * Run nprogs programs with pipes interconecting them and (optionally, if
  * output_file is not NULL) write the output to a file, as in:
@@ -255,6 +268,7 @@ static inline int run_programs_with_pipe(int nprogs, char ***const argv_list,
 
 	return ret_value;
 }
+#endif
 
 void initialize_g_sas_values(){
 	//Hydrophobic
@@ -271,6 +285,7 @@ void initialize_g_sas_values(){
  *
  * Call finish_gromacs_execution when done using Gromacs
  */
+_2PG_CARTESIAN_EXPORT
 void init_gromacs_execution (){
 
 	command = Malloc(char, MAX_COMMAND);
@@ -353,6 +368,7 @@ void init_gromacs_execution (){
 * This function is to be called when the Gromacs funcions below will no longer
 * be used in order to release memory used by internal variables 
 */
+_2PG_CARTESIAN_EXPORT
 void finish_gromacs_execution(){
 
 	free(command);
@@ -1065,6 +1081,7 @@ void initialize_values_for_next_solution(){
 
 /** Calculates the objectives by GROMACS
 */
+_2PG_CARTESIAN_EXPORT
 void get_gromacs_objectives(solution_t *solutions, const input_parameters_t *in_para){
 	const protein_t *population_aux;
 	char pdbfile_aux[30];
@@ -1152,6 +1169,7 @@ void get_gromacs_objectives(solution_t *solutions, const input_parameters_t *in_
 
 /** Calculates the objectives of one solution by GROMACS
 */
+_2PG_CARTESIAN_EXPORT
 void get_gromacs_objectives_of_solution(solution_t *solution, 
 	const input_parameters_t *in_para, const int *ind){
 	const protein_t *population_aux;

@@ -7,6 +7,12 @@
 #include "defines.h"
 #include "enums.h"
 
+#ifdef WIN32
+#include "2pg_cartesian_export.h"
+#else
+#include "2pg_cartesian_export_linux.h"
+#endif
+
 void int2str(char *str, const int *number){
 	sprintf(str,"%d",*number);
 }
@@ -42,6 +48,7 @@ void substring(char *dest, const char __source[], int begin, int end){
 	strcat(dest,"\0");
 }
 
+_2PG_CARTESIAN_EXPORT
 void remove_character(char *str, const char ch){
 	/*This function removes ch character from str*/
 	  char *tr = '\0';
@@ -114,6 +121,7 @@ void rtrim (char *str){
   }
 }
 
+_2PG_CARTESIAN_EXPORT
 void trim (char *str){
 /*This function was based on Gromacs 4.5.3*/
   ltrim (str);

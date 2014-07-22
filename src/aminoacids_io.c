@@ -11,6 +11,12 @@
 #include "messages.h"
 #include "aminoacids.h"
 
+#ifdef WIN32
+#include "2pg_cartesian_export.h"
+#else
+#include "2pg_cartesian_export_linux.h"
+#endif
+
 #define MAX_LINE_FASTA 81
 #define MAX_LEN_PROTEIN 1000
 
@@ -35,6 +41,7 @@ static boolean_t _check_pdb_fasta_file(char *line){
 /** _load_amino_seq loads a Fasta File
 
 */
+_2PG_CARTESIAN_EXPORT
 primary_seq_t *_load_amino_seq(const char *file_name_protein){	
 	/* load amino_t based on pdb fasta file.
 	 * Example of pdb fasta file:

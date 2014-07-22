@@ -10,6 +10,12 @@
 #include "messages.h"
 #include "string_owner.h"
 
+#ifdef WIN32
+#include "2pg_cartesian_export.h"
+#else
+#include "2pg_cartesian_export_linux.h"
+#endif
+
 #define MAX_LINE_FASTA 81
 
 static void build_topol_filename(char *filename, const char *prefix, const int *v){
@@ -196,6 +202,7 @@ void save_topology_protein(const top_global_t *top, const char *path,
 
 /** Save topology of population
 */
+_2PG_CARTESIAN_EXPORT
 void save_topology_population(const protein_t *pop, const int *popsize, 
 	const char *path, const char *prefix){
 	char *filename;
